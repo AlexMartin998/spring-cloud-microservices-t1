@@ -1,6 +1,7 @@
 package com.alex.dragonball.controllers;
 
 import com.alex.dragonball.config.DragonBallConfig;
+import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ public class ApplicationNameController {
 
 
     @GetMapping
+    @Timed("alx.dragonball.name.get")   // times solo para Controller Methods  <--  /actuator/metrics/alx.dragonball.name.get
     public ResponseEntity<String> getAppName() {
         log.info("Getting Application Name");
 
