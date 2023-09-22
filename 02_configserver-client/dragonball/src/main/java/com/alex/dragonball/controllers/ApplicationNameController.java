@@ -38,7 +38,7 @@ public class ApplicationNameController {
         int value = new Random().nextInt(20);
 
         // condicionar el Value del TAG de esta metric  | consultar x tag: actuator/metrics/alx.dragonball.name?tag=level:jr
-        meterRegistry.counter("alx.dragonball.name", "level", (value < 3) ? "jr" : "sr")
+        meterRegistry.counter("alx.dragonball.name", "level", (value < 9) ? "jr" : "sr")
                 .increment(value);  // incrementamos el counter con 1 random
 
 
