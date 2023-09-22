@@ -14,6 +14,21 @@ services:
       - 9090:9090
     restart: always
 
+  grafana:
+    image: grafana/grafana:9.5.10
+    user: '472'
+    depends_on:
+      - prometheus
+
+    # spring app in HOST and grafana in Docker
+    network_mode: host
+
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+    restart: always
+
 volumes:
   prometheus_data: {}
   grafana_data: {}
