@@ -71,7 +71,7 @@ public class GatewayConfig {
                 )
                 .route(route -> route
                         .path("/api/v1/db-failover/dragonball/characters")
-                        .uri("lb://alx-dragonball-failover")
+                        .uri("lb://alx-dragonball-failover")      // <---
                 )
                 .build();
     }
