@@ -2,6 +2,7 @@ package com.example.gameofthrones.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,8 @@ public class TranslationService {
     }
 
 
-    // // W con cache: Si ya esta Cacheado, NOO toca esta logica
-    @Cacheable("translations")
+    // // W con cache en Memoria: Si ya esta Cacheado, NOO toca esta logica
+    @Cacheable("translations")  //   <--  CacheConfig > ConcurrentMapCacheManager
     public Optional<String> getTranslation(String message) {
         log.info(" ====== Get Translation ====== ");
 
@@ -41,6 +42,10 @@ public class TranslationService {
         }
 
         return Optional.empty();
+    }
+
+    @CacheEvict("translations")  // nombre del CACHE q queremos Limpiar  <--  CacheConfig > ConcurrentMapCacheManager
+    public void clearCache(String message) {
     }
 
 }

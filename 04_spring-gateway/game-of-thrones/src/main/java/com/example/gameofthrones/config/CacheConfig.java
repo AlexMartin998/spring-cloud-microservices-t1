@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+// // W con Cache en MEMORIA
 @EnableCaching
 @Configuration
 public class CacheConfig {
