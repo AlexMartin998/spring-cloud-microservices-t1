@@ -1,4 +1,4 @@
-package com.alex.gameofthrones;
+package com.example.gameofthrones;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
