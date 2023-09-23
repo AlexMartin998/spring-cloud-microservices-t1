@@ -34,6 +34,12 @@ services:
       - grafana_data:/var/lib/grafana
     restart: always
 
+  # ### Caching with Redis
+  redis:
+    image: redis:7.2-alpine
+    ports:
+      - 6379:6379
+
 volumes:
   prometheus_data: {}
   grafana_data: {}
