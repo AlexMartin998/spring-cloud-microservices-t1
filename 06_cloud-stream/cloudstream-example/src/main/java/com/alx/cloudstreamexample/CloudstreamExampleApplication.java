@@ -31,20 +31,21 @@ public class CloudstreamExampleApplication {
     }
 
 
+    // /// // // Suppliers q siempre emiten data:
     // // // Supplier / Producer   >>   Processor | Function   >>   Consumer      <--   para q funcionen con  CloudStream  deben ser @Bean
     // // producer-out-0
-    @Bean
+    //@Bean
     public Supplier<Flux<Long>> producer() {
         return () -> Flux.interval(Duration.ofSeconds(1)).log();
     }
 
     // // processor-in-0  |  processor-out-0
-    @Bean
+    //@Bean
     public Function<Flux<Long>, Flux<Long>> processor() {
         return flx -> flx.map(n -> n * n);  // return el cuadrado del num q recibe
     }
 
-    @Bean
+    //@Bean
     public Consumer<Long> consumer() {  // ya recibe simplemente el Long
         return (number) -> {
             log.info("Message received: '{}'", number);

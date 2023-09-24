@@ -1,17 +1,24 @@
-# ## Asi Desacoplamso aun mas las Implementaciones: Definimos en q TOPICS se publicaran los msgs o d q TOPIC se leeran los msgs
-spring.cloud.stream:
-  # componentes q component todos nuestro pipeline
-  function:
-    definition:
-      producer;processor;consumer
-
-  # los bindings
-  bindings:
-    producer-out-0:
-      destination: numbers  # El binding del producer-out-0 va a ir con DESTINO a un Lugar llamado 'numbers'
-    processor-in-0:
-      destination: numbers  # la Entrada de este va a ser 'numbers'
-    processor-out-0:
-      destination: squares  # y la Salida de este processor va a ser  'squares'
-    consumer-in-0:
-      destination: squares  # la Entrada del consummer va a ser 'squares`
+# ###### Lo comento todo para el ejercicio del   Producer
+## ## Asi Desacoplamso aun mas las Implementaciones: Definimos en q TOPICS se publicaran los msgs o d q TOPIC se leeran los msgs
+#spring.cloud.stream:
+#  # componentes q component todos nuestro pipeline
+#  function:
+#    definition:
+#      producer;processor;consumer
+#
+#  # los bindings
+#  bindings:
+#    producer-out-0:
+#      destination: numbers  # El binding del producer-out-0 va a ir con DESTINO a un Lugar llamado 'numbers'
+#    processor-in-0:
+#      destination: numbers  # la Entrada de este va a ser 'numbers'
+#    processor-out-0:
+#      destination: squares  # y la Salida de este processor va a ser  'squares'
+#    consumer-in-0:
+#      destination: squares  # la Entrada del consummer va a ser 'squares`
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: metrics
