@@ -48,10 +48,8 @@ public class JwtProvider {
         return extractClaim(jwt, Claims::getSubject);
     }
 
-    public boolean validate(String token) {
-        final String username = extractUsername(token);
-
-        return StringUtils.hasText(username);
+    public void validate(String token) {
+        extractUsername(token);
     }
 
 
@@ -77,7 +75,7 @@ public class JwtProvider {
                     .parseClaimsJws(jwt)    // parse el JWT para extraer los claims
                     .getBody();     // cuando hace el parse puede obtener los claims y en este caso queremos el body
         } catch (Exception ex) {    // invalid signature
-            throw new RuntimeException("Invalid Token Signature");
+            throw new RuntimeException("Invalid Token");
         }
 
         return claims;

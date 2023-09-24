@@ -25,7 +25,7 @@ spring:
 
 # ### Security
 jwt:
-  secret: SomeStrongSecret123
+  secret: EEiH9JvUgoOW1udBX2sasd12Qrt==asE3d072Y3Lu40rVZi4dameiwubztn9xdUeCCmINkgxhGW7HsKbngIe
 
 
 
