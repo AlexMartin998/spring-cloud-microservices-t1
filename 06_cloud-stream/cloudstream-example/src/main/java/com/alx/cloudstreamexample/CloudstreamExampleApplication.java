@@ -21,7 +21,7 @@ public class CloudstreamExampleApplication {
     // // Ya se conecta en auto y en este caso transforma la informacion q emite el producer
     // Crea los   TOPICS    con el   NOMBRE de la Fn
     @Bean
-    public Function<String, String> toUpperCase() {
+    public Function<String, String> toUpperCase() {  // <--  processor
         return data -> {
             log.info("==== {} ====", data);
 
