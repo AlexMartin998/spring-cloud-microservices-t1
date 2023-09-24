@@ -30,9 +30,4 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/*
-notes*md
-*.pdf
-*.zip
-kafka_2.*
-
+.vscode/
