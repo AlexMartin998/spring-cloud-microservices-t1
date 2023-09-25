@@ -7,8 +7,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Key;
 import java.util.Date;
@@ -75,7 +77,7 @@ public class JwtProvider {
                     .parseClaimsJws(jwt)    // parse el JWT para extraer los claims
                     .getBody();     // cuando hace el parse puede obtener los claims y en este caso queremos el body
         } catch (Exception ex) {    // invalid signature
-            throw new RuntimeException("Invalid Token");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
         }
 
         return claims;

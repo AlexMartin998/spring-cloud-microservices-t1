@@ -37,12 +37,12 @@ public class AuthFilter implements GatewayFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // validate Authorization header
         if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION))
-            return onError(exchange, HttpStatus.BAD_REQUEST);
+            return onError(exchange, HttpStatus.UNAUTHORIZED);
 
         // get bearer token
         String authToken = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
         String[] chunks = authToken.split(" ");
-        if (chunks.length != 2 || !chunks[0].equals("Bearer")) return onError(exchange, HttpStatus.BAD_REQUEST);
+        if (chunks.length != 2 || !chunks[0].equals("Bearer")) return onError(exchange, HttpStatus.UNAUTHORIZED);
 
         // build a req to auth ms
         return webClientBuilder.build().post().uri(authMSUrl.concat("/validate?=token=").concat(chunks[1]))

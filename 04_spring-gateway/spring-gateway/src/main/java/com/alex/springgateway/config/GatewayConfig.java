@@ -1,5 +1,7 @@
 package com.alex.springgateway.config;
 
+import com.alex.springgateway.auth.filter.AuthFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +11,12 @@ import org.springframework.context.annotation.Profile;
 
 // // reglas del Gateway
 @Configuration
+@RequiredArgsConstructor
 public class GatewayConfig {
+
+    // // Auth
+    private final AuthFilter authFilter;
+
 
     // // Gateway SIMPLE q NOOO usa Eureka: Si se generan Nuevas Instancias de algun MS, NOOO seran incluidas en este Enrutamiento
     @Bean
@@ -56,22 +63,41 @@ public class GatewayConfig {
                 .route(route -> route
                         .path("/api/v1/dragonball/*") // mismo Path de MS
                         .filters( // si cae 1 Req a este path+uri del MS y NO funciona, lo redirecciona a esta otra URL:
-                                f -> f.circuitBreaker(
-                                        cb -> cb.setName("failoverCB")
-                                                // url a la q va a redireccionar en caso d q el MS falle
-                                                .setFallbackUri("forward:/api/v1/db-failover/dragonball/characters") // <---
-                                                .setRouteId("dbFailover")
-                                )
+                                f -> {
+                                    f.circuitBreaker(  // circuit breaker (resiliencia pattern)
+                                            cb -> cb.setName("failoverCB")
+                                                    // url a la q va a redireccionar en caso d q el MS falle
+                                                    .setFallbackUri("forward:/api/v1/db-failover/dragonball/characters") // <---
+                                                    .setRouteId("dbFailover")
+                                    );
+
+                                    // auth
+                                    f.filter(authFilter);
+
+                                    return f;
+                                }
                         )
                         .uri("lb://dragon-ball")  // application.name del MS (nombre con el q esta registrado en Eureka)
                 )
                 .route(route -> route
                         .path("/api/v1/gameofthrones/*")
+                        // auth
+                        .filters(
+                                f -> f.filter(authFilter)
+                        )
                         .uri("lb://alx-game-of-thrones")
                 )
                 .route(route -> route
                         .path("/api/v1/db-failover/dragonball/characters")
+                        // auth
+                        .filters(
+                                f -> f.filter(authFilter)
+                        )
                         .uri("lb://alx-dragonball-failover")      // <---
+                )
+                .route(route -> route           // registramos el auth ms
+                        .path("/auth/**")
+                        .uri("lb://alx-auth")
                 )
                 .build();
     }
